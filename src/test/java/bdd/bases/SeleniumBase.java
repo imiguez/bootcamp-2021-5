@@ -2,10 +2,7 @@ package bdd.bases;
 
 import junit.framework.AssertionFailedError;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -77,5 +74,17 @@ public class SeleniumBase {
         return true;
     }
 
+    public String getValue(By locator) {
+        return findElement(locator).getAttribute("value");
+    }
+
+    public void waitElementToBeClickable(By locator, int timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(findElement(locator)));
+        } catch (TimeoutException e) {
+            System.out.println("waitElementToBeClickable finished: " + locator);
+        }
+    }
 
 }

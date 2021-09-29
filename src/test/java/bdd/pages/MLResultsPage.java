@@ -11,23 +11,28 @@ public class MLResultsPage extends SeleniumBase {
         super(driver);
     }
 
-    By precioMaximo = By.xpath("//input[@data-testid='Maximum-price']");
-    By ordenarPorBtn = By.xpath("//button[@class='andes-dropdown__trigger']");
-    By ordenarPorMayorValor = By.xpath("//li[@role='presentation'][3]");
-    By primeraOpcion = By.xpath("//ol[@class='ui-search-layout ui-search-layout--stack']/li[1]//span[@class='price-tag-text-sr-only']");
+    By maxPrice = By.xpath("//input[@data-testid='Maximum-price']");
+    By orderBtn = By.xpath("//button[@class='andes-dropdown__trigger']");
+    By orderByHigherPrice = By.xpath("//li[@role='presentation'][3]");
+    By firstResultPrice = By.xpath("//ol[@class='ui-search-layout ui-search-layout--stack']/li[1]//span[@class='price-tag ui-search-price__part']/span[1]");
+    By firstResultLink = By.xpath("//ol[@class='ui-search-layout ui-search-layout--stack']/li[1]//a[@class='ui-search-item__group__element ui-search-link']");
 
     public void ingresarPrecioMaximo(String precio) {
-        type(precio, precioMaximo);
-        typeKey(Keys.ENTER, precioMaximo);
+        type(precio, maxPrice);
+        typeKey(Keys.ENTER, maxPrice);
     }
 
     public void ordenoPorMayorValor() {
-        click(ordenarPorBtn);
-        click(ordenarPorMayorValor);
+        click(orderBtn);
+        click(orderByHigherPrice);
     }
 
     public int obtenerPrecioDelPrimerResultado() {
-        return Integer.valueOf(getText(primeraOpcion).replace(" pesos", ""));
+        return Integer.valueOf(getText(firstResultPrice).replace(" pesos", ""));
+    }
+
+    public void selectFirstResult() {
+        click(firstResultLink);
     }
 
 }
